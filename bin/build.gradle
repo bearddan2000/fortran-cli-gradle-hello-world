@@ -1,0 +1,20 @@
+def compileFortran(name) {
+    println '## compileFortran'
+    exec {
+        println "## compile $name"
+        workingDir "/home/gradle"
+        commandLine "gfortran", "-c", "${name}.f90", "-o", "${name}.o"
+    }
+    exec {
+        println "## link $name"
+        workingDir "/home/gradle"
+        commandLine "gfortran", "${name}.o", "-o", "${name}"
+    }
+    exec {
+        println "## run $name"
+        workingDir "/home/gradle"
+        commandLine "./${name}"
+    }
+}
+
+compileFortran("main")
